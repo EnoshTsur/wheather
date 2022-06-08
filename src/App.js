@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./styles.css";
+import useGet from "./hooks/useGet/useGet";
+import { WEATHER_SERVICE, WEATHER_CIRCLE_SIZE, WEATHER_CIRCLE_POSITION } from "./constants/constants";
+import { getTemperature } from "./common/utils";
+import Loader from "./components/Loader/Loader";
+import WeatherContext from "./context/weatherContext";
+import Weather from "./components/Weather/Weather";
 
-function App() {
+export default function App() {
+
+  const { data, loading } = useGet(WEATHER_SERVICE);
+
+  if (loading) {
+    return (
+      <Loader />
+    )
+  }
+
+  const temperature = getTemperature(data);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <WeatherContext.Provider value={{ temperature }}>
+        <Weather
+          circleSize={WEATHER_CIRCLE_SIZE}
+          initialPosition={WEATHER_CIRCLE_POSITION}
+        />
+      </WeatherContext.Provider>
     </div>
   );
 }
-
-export default App;

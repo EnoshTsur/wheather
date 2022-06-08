@@ -1,0 +1,12 @@
+.circle {
+    border-radius: 50px;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+    transition: all 1s linear;
+}
+
+.piece {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+}
